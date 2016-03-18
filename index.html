@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myapp">
+<head>
+	<meta charset="UTF-8">
+	<title>icloud提醒事项</title>
+	<link rel="stylesheet" href="./css/index.css">
+	<script src="./js/angular.js"></script>
+	<script src="./js/index.js"></script>
+</head>
+<body ng-controller="mycontroll">
+	<div class="zuo">
+		<div class="title">
+			<span>iCloud</span>
+			<span ng-click="addsj()" ng-dblclick="zz($event)"> </span>
+		</div>
+		<ul>
+			<li ng-repeat="value in sjlblist track by $index" ng-click="qiehuan($index)" ng-dblclick="zz($event)">
+				<span class="{{value.color}}"></span>
+				<input type="text" ng-blur="save()" ng-model="value.name">
+				<div class="bottom"></div>
+			</li>
+		</ul>
+	</div>
+	<div class="you">
+		<input type="text" ng-model="all">	
+		<hr>
+		
+		<div class="ssjg" ng-show="all">
+			<h1>"{{all}}"的搜索结果</h1>
+			<dl>
+			<!--  ng-repeat="value in data | search:key" -->
+				<dd>{{value.name}}</dd>
+				<dd ng-repeat="r in value.items">{{r.title}}</dd>
+			</dl>
+		</div>
+		<div ng-hide="all">
+			<div class="youtitle">
+				<h1 class="{{sjlblist[curlistindex].color}}">{{sjlblist[curlistindex].name}}</h1>
+					<h5 class="{{sjlblist[curlistindex].color}}" id="kaiguan">选项</h5>
+				<div id="xuanxiang">
+					<input type="text" ng-model="sjlblist[curlistindex].name" class="{{sjlblist[curlistindex].color}}">
+					<p>列表颜色</p>
+					<span ng-repeat="value in color" ng-class="value" ng-click="sjlblist[curlistindex].color=value" ng-dblclick="zz($event)" class="yanse"></span>
+					<hr>
+					<button ng-click="delete()" ng-dblclick="zz($event)" class="xxbtn1">删除</button>
+					<button class="xxbtn2">完成</button>
+				</div>
+				
+			</div>
+			<div class="done_item">已完成: <span>{{cutdone()}}</span>项</div>
+			<ul>
+				<li ng-repeat="value in sjlblist[curlistindex].items track by $index" ng-click="qian[curlistindex]" ng-show="value.done">
+					<span class="bb" ng-class="sjlblist[curlistindex].color" ng-click="value.done=false;save()" ng-dblclick="zz($event)"></span>
+					<input type="text" ng-blur="save()" ng-model="value.title">
+					<!-- <button ng-click="deleteitem($index)"class="{{sjlblist[curlistindex].color}} " id="shanchu" ng-dblclick="zz($event)">删除</button> -->
+				</li>
+			</ul>
+			<hr>
+			<ul>
+				<li ng-repeat="value in sjlblist[curlistindex].items track by $index" ng-hide="value.done">
+					<span class="aa" ng-class="sjlblist[curlistindex].color" ng-click="value.done=true;save()" ng-dblclick="zz($event)"></span>
+					<input type="text" ng-blur="save()" ng-model="value.title">
+					<button ng-click="deleteitem($index)"class="{{sjlblist[curlistindex].color}} " id="shanchu" ng-dblclick="zz($event)">删除</button>
+				</li>
+			</ul>
+				<div class="new_item" ng-click="additem()" ng-dblclick="zz($event)">新项目</div>
+		</div>
+	</div>
+</body>
+</html>
